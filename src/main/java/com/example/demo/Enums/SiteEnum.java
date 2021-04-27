@@ -6,6 +6,7 @@ public enum SiteEnum {
     MODIFY_SUCCESS(0, "修改成功"),
     DEL_SUCCESS(0, "刪除成功"),
     FAIL(1,"操作失敗"),
+    MODIFY_FAIL(1, "修改失敗"),
     DEL_FAIL(1, "刪除失敗"),
     SITE_EXISTS(1, "站點已存在"),
     SITE_NOT_EXISTS(1,"站點不存在"),

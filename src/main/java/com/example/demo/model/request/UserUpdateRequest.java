@@ -1,37 +1,17 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.request;
 
-import com.example.demo.model.request.UserInsertRequest;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.example.demo.model.entity.Site;
+
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "user")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserUpdateRequest {
     private Integer uid;
-
     private Integer staffId;
     private String name;
     private Date modifyTime;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_site", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "sid")})
-    private List<Site> sites;
-
-    public User() {
-    }
-
-
-    public User(UserInsertRequest userInsertRequest) {
-        this.setStaffId(userInsertRequest.getStaffId());
-        this.setName(userInsertRequest.getName());
-        this.setModifyTime(new Date());
-        this.setSites(userInsertRequest.getSites());
-    }
+    List<Site> sites;
 
     public Integer getUid() {
         return uid;

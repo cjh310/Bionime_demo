@@ -5,9 +5,11 @@ import com.example.demo.Enums.SiteEnum;
 import com.example.demo.model.entity.Site;
 import com.example.demo.model.entity.User;
 import com.example.demo.model.request.SiteInsertRequest;
+import com.example.demo.model.request.SiteUpdateRequest;
 import com.example.demo.model.response.SiteInsertResponse;
 import com.example.demo.model.response.SiteSelectAllResponse;
 import com.example.demo.model.response.SiteSelectResponse;
+import com.example.demo.model.response.SiteUpdateResponse;
 import com.example.demo.repository.SiteRepository;
 import com.example.demo.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +74,16 @@ public class SiteServiceImpl implements SiteService {
         return SiteEnum.DEL_FAIL;
     }
 
-
+    @Override
+    public SiteUpdateResponse updateSite(SiteUpdateRequest siteUpdateRequest) {
+        Optional<Site> byId = siteRepository.findById(siteUpdateRequest.getSid());
+        if (byId.isPresent()){
+            Site site= byId.get();
+            site.setName(siteUpdateRequest.getName());
+            site.setModifyTime(new Date());
+            siteRepository.save(site);
+            return new SiteUpdateResponse(site,SiteEnum.MODIFY_SUCCESS);
+        }
+        return new SiteUpdateResponse(SiteEnum.MODIFY_FAIL);
+    }
 }

@@ -2,15 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.Enums.SiteEnum;
 import com.example.demo.model.request.SiteInsertRequest;
+import com.example.demo.model.request.SiteUpdateRequest;
 import com.example.demo.model.response.SiteInsertResponse;
 import com.example.demo.model.response.SiteSelectAllResponse;
 import com.example.demo.model.response.SiteSelectResponse;
+import com.example.demo.model.response.SiteUpdateResponse;
 import com.example.demo.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -25,9 +28,12 @@ public class SiteController {
     public String addSite(Model model, SiteInsertRequest siteInsertRequest) {
         SiteInsertResponse response = siteService.addSite(siteInsertRequest);
         if (response.getStatus() != 0) {
+            model.addAttribute("status", response.getStatus());
             model.addAttribute("message", response.getMessage());
             return "index";
         }
+        model.addAttribute("siteName", siteInsertRequest.getName());
+        model.addAttribute("status", response.getStatus());
         model.addAttribute("message", response.getName() + INSERT_SUCCESS.getZH());
         return "index";
     }
@@ -47,9 +53,11 @@ public class SiteController {
     public String selectSite(Model model, Integer id) {
         SiteSelectResponse response = siteService.selectSite(id);
         if (response.getStatus() != 0) {
+            model.addAttribute("status", response.getStatus());
             model.addAttribute("message", response.getMessage());
             return "site";
         }
+        model.addAttribute("status", response.getStatus());
         model.addAttribute("site", response);
         return "site";
     }
@@ -57,7 +65,23 @@ public class SiteController {
     @DeleteMapping("/delSite")
     public String delSite(Model model, Integer id) {
         SiteEnum response = siteService.delSite(id);
+        model.addAttribute("status", response.getSTATUS());
         model.addAttribute("message", response.getZH());
+        return "site";
+    }
+
+
+    @PutMapping("/updateSite")
+    public String updateSite(Model model, SiteUpdateRequest siteUpdateRequest) {
+        SiteUpdateResponse response = siteService.updateSite(siteUpdateRequest);
+        if (response.getStatus() != 0) {
+            model.addAttribute("site", siteUpdateRequest);
+            model.addAttribute("status", response.getStatus());
+            model.addAttribute("message", response.getMessage());
+            return "site";
+        }
+        model.addAttribute("status", response.getStatus());
+        model.addAttribute("message", response.getMessage());
         return "site";
     }
 }
