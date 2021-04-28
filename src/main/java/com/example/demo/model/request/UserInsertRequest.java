@@ -7,16 +7,16 @@ import java.util.Date;
 import java.util.List;
 
 public class UserInsertRequest {
-    private Integer staffId;
+    private String staffId;
     private String name;
     private Date modifyTime;
-    List<Site> sites;
+    List<Integer> sitesId;
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
@@ -36,11 +36,21 @@ public class UserInsertRequest {
         this.modifyTime = modifyTime;
     }
 
-    public List<Site> getSites() {
-        return sites;
+    public List<Integer> getSitesId() {
+        return sitesId;
     }
 
-    public void setSites(List<Site> sites) {
-        this.sites = sites;
+    public void setSitesId(List<Integer> sitesId) {
+        this.sitesId = sitesId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInsertRequest{" +
+                "staffId=" + staffId +
+                ", name='" + name + '\'' +
+                ", modifyTime=" + modifyTime +
+                ", sitesId=" + sitesId +
+                '}';
     }
 }

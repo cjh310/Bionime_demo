@@ -11,9 +11,9 @@ import com.example.demo.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -49,29 +49,33 @@ public class SiteController {
         return "site";
     }
 
-    @GetMapping("/selectSite")
-    public String selectSite(Model model, Integer id) {
-        SiteSelectResponse response = siteService.selectSite(id);
-        if (response.getStatus() != 0) {
-            model.addAttribute("status", response.getStatus());
-            model.addAttribute("message", response.getMessage());
-            return "site";
-        }
-        model.addAttribute("status", response.getStatus());
-        model.addAttribute("site", response);
-        return "site";
+    @GetMapping("/selectAllSitesAjax")
+    @ResponseBody
+    public List<SiteSelectAllResponse> selectAllSitesAjax(Model model) {
+        return siteService.selectAllSite();
     }
 
-    @DeleteMapping("/delSite")
-    public String delSite(Model model, Integer id) {
-        SiteEnum response = siteService.delSite(id);
+    @GetMapping("/selectSite")
+    @ResponseBody
+    public SiteSelectResponse selectSite(Model model, Integer sid) {
+        if (sid != null) {
+            return siteService.selectSite(sid);
+        }
+        return null;
+    }
+
+    @GetMapping("/delSite")
+    public String delSite(Model model, Integer sid) {
+        SiteEnum response = siteService.delSite(sid);
+
         model.addAttribute("status", response.getSTATUS());
         model.addAttribute("message", response.getZH());
+        this.selectAllSites(model);
         return "site";
     }
 
 
-    @PutMapping("/updateSite")
+    @GetMapping("/updateSite")
     public String updateSite(Model model, SiteUpdateRequest siteUpdateRequest) {
         SiteUpdateResponse response = siteService.updateSite(siteUpdateRequest);
         if (response.getStatus() != 0) {
@@ -82,7 +86,13 @@ public class SiteController {
         }
         model.addAttribute("status", response.getStatus());
         model.addAttribute("message", response.getMessage());
+        this.selectAllSites(model);
         return "site";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 }
 

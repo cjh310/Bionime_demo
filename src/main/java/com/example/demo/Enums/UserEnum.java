@@ -5,6 +5,7 @@ public enum UserEnum {
     INSERT_SUCCESS(0, "新增成功"),
     MODIFY_SUCCESS(0, "修改成功"),
     DEL_SUCCESS(0,"刪除成功"),
+    ERROR(1, "錯誤"),
     USER_EXISTS(1, "此編號已存在"),
     USER_NOT_EXISTS(1, "此使用者不存在"),
     DEL_FAIL(1,"刪除失敗"),

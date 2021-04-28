@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class UserSelectAllResponse {
     private Integer uid;
-    private Integer staffId;
+    private String staffId;
     private Date modifyTime;
 
 
@@ -29,11 +29,11 @@ public class UserSelectAllResponse {
         this.uid = uid;
     }
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
@@ -43,5 +43,14 @@ public class UserSelectAllResponse {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSelectAllResponse{" +
+                "uid=" + uid +
+                ", staffId=" + staffId +
+                ", modifyTime=" + modifyTime +
+                '}';
     }
 }

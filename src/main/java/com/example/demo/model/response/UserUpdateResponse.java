@@ -7,7 +7,7 @@ import com.example.demo.model.entity.User;
 public class UserUpdateResponse {
     private Integer uid;
     private String name;
-    private Integer staffId;
+    private String staffId;
 
     private Integer status;
     private String message;
@@ -44,11 +44,11 @@ public class UserUpdateResponse {
         this.name = name;
     }
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 

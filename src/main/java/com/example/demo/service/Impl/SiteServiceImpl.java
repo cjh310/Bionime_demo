@@ -55,19 +55,24 @@ public class SiteServiceImpl implements SiteService {
     public SiteSelectResponse selectSite(Integer id) {
         Optional<Site> site = siteRepository.findById(id);
         if (site.isPresent()) {
-            Map<Integer, Date> userInfo = new HashMap<>();
+            List<Map<String,Object>> userInfo = new ArrayList<>();
             List<User> users = site.get().getUsers();
-            users.forEach(user ->
-                    userInfo.put(user.getStaffId(), user.getModifyTime())
+            users.forEach(user -> {
+                        Map<String, Object> userVo = new HashMap<>();
+                        userVo.put("staffId", user.getStaffId());
+                        userVo.put("modifyTime", user.getModifyTime());
+                        userInfo.add(userVo);
+                    }
+
             );
-            return new SiteSelectResponse(site.get(),userInfo, SiteEnum.SUCCESS);
+            return new SiteSelectResponse(site.get(), userInfo, SiteEnum.SUCCESS);
         }
         return new SiteSelectResponse(SiteEnum.SITE_NOT_EXISTS);
     }
 
     @Override
     public SiteEnum delSite(Integer id) {
-        if(siteRepository.existsById(id)){
+        if (siteRepository.existsById(id)) {
             siteRepository.deleteById(id);
             return SiteEnum.DEL_SUCCESS;
         }
@@ -77,12 +82,12 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public SiteUpdateResponse updateSite(SiteUpdateRequest siteUpdateRequest) {
         Optional<Site> byId = siteRepository.findById(siteUpdateRequest.getSid());
-        if (byId.isPresent()){
-            Site site= byId.get();
+        if (byId.isPresent()) {
+            Site site = byId.get();
             site.setName(siteUpdateRequest.getName());
             site.setModifyTime(new Date());
             siteRepository.save(site);
-            return new SiteUpdateResponse(site,SiteEnum.MODIFY_SUCCESS);
+            return new SiteUpdateResponse(site, SiteEnum.MODIFY_SUCCESS);
         }
         return new SiteUpdateResponse(SiteEnum.MODIFY_FAIL);
     }

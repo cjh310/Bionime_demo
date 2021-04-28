@@ -14,7 +14,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
 
-    private Integer staffId;
+    private String staffId;
     private String name;
     private Date modifyTime;
 
@@ -26,11 +26,12 @@ public class User implements Serializable {
     }
 
 
-    public User(UserInsertRequest userInsertRequest) {
+    public User(UserInsertRequest userInsertRequest,List<Site> sites) {
         this.setStaffId(userInsertRequest.getStaffId());
         this.setName(userInsertRequest.getName());
         this.setModifyTime(new Date());
-        this.setSites(userInsertRequest.getSites());
+
+        this.setSites(sites);
     }
 
     public Integer getUid() {
@@ -41,11 +42,11 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
@@ -71,5 +72,16 @@ public class User implements Serializable {
 
     public void setSites(List<Site> sites) {
         this.sites = sites;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", staffId=" + staffId +
+                ", name='" + name + '\'' +
+                ", modifyTime=" + modifyTime +
+                ", sites=" + sites +
+                '}';
     }
 }

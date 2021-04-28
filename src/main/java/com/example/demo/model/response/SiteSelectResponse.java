@@ -5,13 +5,14 @@ import com.example.demo.Enums.SiteEnum;
 import com.example.demo.model.entity.Site;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class SiteSelectResponse {
     private Integer sid;
     private String name;
 
-    private Map<Integer, Date> userInfo;
+    private List<Map<String,Object>> userInfo;
 
     private Integer status;
     private String message;
@@ -25,7 +26,7 @@ public class SiteSelectResponse {
 
     }
 
-    public SiteSelectResponse(Site site, Map<Integer, Date> userInfo, SiteEnum siteEnum) {
+    public SiteSelectResponse(Site site, List<Map<String,Object>> userInfo, SiteEnum siteEnum) {
         this.sid = site.getSid();
         this.name = site.getName();
         this.userInfo = userInfo;
@@ -50,11 +51,11 @@ public class SiteSelectResponse {
         this.name = name;
     }
 
-    public Map<Integer, Date> getUserInfo() {
+    public List<Map<String,Object>> getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(Map<Integer, Date> userInfo) {
+    public void setUserInfo(List<Map<String,Object>> userInfo) {
         this.userInfo = userInfo;
     }
 
@@ -72,5 +73,16 @@ public class SiteSelectResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "SiteSelectResponse{" +
+                "sid=" + sid +
+                ", name='" + name + '\'' +
+                ", userInfo=" + userInfo +
+                ", status=" + status +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

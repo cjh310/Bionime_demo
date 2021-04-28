@@ -20,4 +20,12 @@ public class SiteUpdateRequest {
     public void setSid(Integer sid) {
         this.sid = sid;
     }
+
+    @Override
+    public String toString() {
+        return "SiteUpdateRequest{" +
+                "sid=" + sid +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

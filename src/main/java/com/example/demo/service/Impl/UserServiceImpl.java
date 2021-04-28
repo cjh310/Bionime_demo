@@ -10,6 +10,7 @@ import com.example.demo.model.response.UserInsertResponse;
 import com.example.demo.model.response.UserSelectAllResponse;
 import com.example.demo.model.response.UserSelectResponse;
 import com.example.demo.model.response.UserUpdateResponse;
+import com.example.demo.repository.SiteRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,23 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SiteRepository siteRepository;
 
 
     @Override
     public UserInsertResponse addUser(UserInsertRequest userInsertRequest) {
         User oldUser = userRepository.findByStaffId(userInsertRequest.getStaffId());
         if (oldUser == null) {
-            User user = new User(userInsertRequest);
+            List<Site> sites;
+            try {
+                Iterable<Integer> iterable = userInsertRequest.getSitesId();
+                sites = siteRepository.findAllById(iterable);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new UserInsertResponse(UserEnum.ERROR);
+            }
+            User user = new User(userInsertRequest, sites);
             User save = userRepository.save(user);
             return new UserInsertResponse(save, UserEnum.INSERT_SUCCESS);
         }

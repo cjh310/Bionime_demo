@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserSelectResponse {
     private Integer uid;
-    private Integer staffId;
+    private String staffId;
     private String name;
 
     private List<String> siteInfo;
@@ -42,11 +42,11 @@ public class UserSelectResponse {
         this.uid = uid;
     }
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
@@ -80,5 +80,17 @@ public class UserSelectResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSelectResponse{" +
+                "uid=" + uid +
+                ", staffId=" + staffId +
+                ", name='" + name + '\'' +
+                ", siteInfo=" + siteInfo +
+                ", status=" + status +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

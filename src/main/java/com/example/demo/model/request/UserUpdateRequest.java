@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserUpdateRequest {
     private Integer uid;
-    private Integer staffId;
+    private String staffId;
     private String name;
     private Date modifyTime;
     List<Site> sites;
@@ -21,11 +21,11 @@ public class UserUpdateRequest {
         this.uid = uid;
     }
 
-    public Integer getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 

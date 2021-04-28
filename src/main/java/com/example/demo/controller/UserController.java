@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -50,16 +51,12 @@ public class UserController {
     }
 
     @GetMapping("/selectUser")
-    public String selectUser(Model model, Integer id) {
-        UserSelectResponse response = userService.selectUser(id);
-        if (response.getStatus() != 0) {
-            model.addAttribute("status", response.getStatus());
-            model.addAttribute("message", response.getMessage());
-            return "user";
+    @ResponseBody
+    public UserSelectResponse selectUser(Model model, Integer uid) {
+        if(uid!=null){
+            return userService.selectUser(uid);
         }
-        model.addAttribute("status", response.getStatus());
-        model.addAttribute("user", response);
-        return "user";
+        return null;
     }
 
     @DeleteMapping("/delUser")

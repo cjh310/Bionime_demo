@@ -46,4 +46,13 @@ public class SiteSelectAllResponse {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+    @Override
+    public String toString() {
+        return "SiteSelectAllResponse{" +
+                "sid=" + sid +
+                ", name='" + name + '\'' +
+                ", modifyTime=" + modifyTime +
+                '}';
+    }
 }
