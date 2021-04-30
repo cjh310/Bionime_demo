@@ -15,6 +15,7 @@ import com.example.demo.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.example.demo.Enums.SiteEnum.INSERT_SUCCESS;
@@ -55,12 +56,14 @@ public class SiteServiceImpl implements SiteService {
     public SiteSelectResponse selectSite(Integer id) {
         Optional<Site> site = siteRepository.findById(id);
         if (site.isPresent()) {
-            List<Map<String,Object>> userInfo = new ArrayList<>();
+            List<Map<String, Object>> userInfo = new ArrayList<>();
             List<User> users = site.get().getUsers();
             users.forEach(user -> {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
                         Map<String, Object> userVo = new HashMap<>();
                         userVo.put("staffId", user.getStaffId());
-                        userVo.put("modifyTime", user.getModifyTime());
+                        userVo.put("modifyTime", sdf.format(user.getModifyTime()));
                         userInfo.add(userVo);
                     }
 

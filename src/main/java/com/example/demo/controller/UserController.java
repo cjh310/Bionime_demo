@@ -11,9 +11,7 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -27,6 +25,12 @@ public class UserController {
 
     @GetMapping("/addUser")
     public String index(Model model, UserInsertRequest userInsertRequest) {
+        if(userInsertRequest.getStaffId()==null||userInsertRequest.getStaffId().isEmpty()){
+            this.selectAllUsers(model);
+            model.addAttribute("status", UserEnum.NOT_NULL.getSTATUS());
+            model.addAttribute("message", "員工編號"+UserEnum.NOT_NULL.getZH());
+            return "index";
+        }
         UserInsertResponse response = userService.addUser(userInsertRequest);
         if (response.getStatus() != 0) {
             model.addAttribute("status", response.getStatus());
@@ -53,23 +57,30 @@ public class UserController {
     @GetMapping("/selectUser")
     @ResponseBody
     public UserSelectResponse selectUser(Model model, Integer uid) {
-        if(uid!=null){
+        if (uid != null) {
             return userService.selectUser(uid);
         }
         return null;
     }
 
-    @DeleteMapping("/delUser")
-    public String delUser(Model model, Integer id) {
-        UserEnum response = userService.delUser(id);
+    @GetMapping("/delUser")
+    public String delUser(Model model, Integer uid) {
+        UserEnum response = userService.delUser(uid);
+        this.selectAllUsers(model);
         model.addAttribute("status", response.getSTATUS());
         model.addAttribute("message", response.getZH());
         return "user";
     }
 
 
-    @PutMapping("/updateUser")
+    @GetMapping("/updateUser")
     public String updateUser(Model model, UserUpdateRequest userUpdateRequest) {
+        if(userUpdateRequest.getStaffId()==null||userUpdateRequest.getStaffId().isEmpty()){
+            this.selectAllUsers(model);
+            model.addAttribute("status", UserEnum.NOT_NULL.getSTATUS());
+            model.addAttribute("message", "員工編號"+UserEnum.NOT_NULL.getZH());
+            return "user";
+        }
         UserUpdateResponse response = userService.updateUser(userUpdateRequest);
         if (response.getStatus() != 0) {
             model.addAttribute("user", userUpdateRequest);
@@ -77,6 +88,7 @@ public class UserController {
             model.addAttribute("message", response.getMessage());
             return "user";
         }
+        this.selectAllUsers(model);
         model.addAttribute("status", response.getStatus());
         model.addAttribute("message", response.getMessage());
         return "user";

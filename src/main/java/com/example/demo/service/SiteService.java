@@ -13,8 +13,12 @@ import java.util.List;
 
 public interface SiteService {
     SiteInsertResponse addSite(SiteInsertRequest siteInsertRequest);
+
     List<SiteSelectAllResponse> selectAllSite();
+
     SiteSelectResponse selectSite(Integer id);
+
     SiteEnum delSite(Integer id);
+
     SiteUpdateResponse updateSite(SiteUpdateRequest siteUpdateRequest);
 }

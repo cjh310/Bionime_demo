@@ -15,24 +15,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
-    $(document).ready(function () {
-    <c:if test="${not empty message}">
-        Swal.fire({
+        $(document).ready(function () {
+            <c:if test="${not empty message}">
+            Swal.fire({
+                position: 'top-end',
+                <c:if test="${status eq '0'}">
+                icon: 'success',
+                </c:if>
+                <c:if test="${status eq '1'}">
+                icon: 'warning',
+                </c:if>
+                title: "${message}",
+                showConfirmButton: false,
+                timer: 1500
 
-        position: 'top-end',
-        <c:if test="${status eq '0'}">
-            icon: 'success',
-        </c:if>
-        <c:if test="${status eq '1'}">
-            icon: 'warning',
-        </c:if>
-        title: "${message}",
-        showConfirmButton: false,
-        timer: 1500
-
-        })
-    </c:if>
-    });
+            })
+            </c:if>
+        });
     </script>
     <script type="text/javascript">
         function viewSite(sid) {
@@ -47,7 +46,8 @@
                     $("#site_name").val(response.name);
                     $("#site_id").val(response.sid);
                     response.userInfo.forEach(function (data) {
-                        $("#appendTr").after('<tr class="delClass"><td>' + data.staffId + '</td><td>' + data.modifyTime + '</td></tr>');
+                        $("#appendTr").after('<tr class="delClass"><td>' + data.staffId + '</td><td>' + data.modifyTime.toLocaleString() + '</td></tr>');
+
                     })
 
                 },
@@ -69,8 +69,7 @@
 <body>
 <div class="text-center align-self-center">
     <h3>站點列表</h3>
-    <table border="1" width="30%" style="font-size:20px;height:160px;" align="center" class="text-center"
-           cellpadding="5" cellspacing="5">
+    <table border="1" width="30%" style="font-size:20px;" align="center" class="text-center">
         <tr>
             <td><b>站點</b></td>
             <td><b>修改時間</b></td>
@@ -90,7 +89,7 @@
         </c:forEach>
 
     </table>
-    <form method="get" action="/index">
+    <form method="get" action="index">
         <button class="btn btn-primary" type="submit">返回</button>
     </form>
 
@@ -107,11 +106,11 @@
                 <div style="font-size:20px;" class="modal-body col-sm-12 text-center align-self-center">
                     <form method="get" action="updateSite"
                           enctype="multipart/form-data">
-                    <input id="site_id" type="hidden" name="sid">
-                    站點名稱：<input id="site_name" type="text" name="name">
-                    <h4>站點護士列表</h4>
+                        <input id="site_id" type="hidden" name="sid">
+                        站點名稱：<input id="site_name" type="text" name="name">
+                        <h4>站點護士列表</h4>
 
-                        <table border="1" width="90%" style="font-size:20px;height:120px;" align="center"
+                        <table border="1" width="90%" style="font-size:20px;" align="center"
                                class="text-center">
                             <tr id="appendTr">
                                 <td>員工編號</td>
@@ -127,6 +126,7 @@
             </div>
         </div>
     </div>
+</div>
 
 </body>
 

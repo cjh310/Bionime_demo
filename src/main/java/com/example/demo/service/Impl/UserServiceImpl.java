@@ -16,10 +16,7 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -66,13 +63,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserSelectResponse selectUser(Integer id) {
         Optional<User> user = userRepository.findById(id);
+        List<Site> allSites = siteRepository.findAll();
         if (user.isPresent()) {
-            List<String> siteInfo = new ArrayList<>();
+            List<Map<String, Object>> siteInfo = new ArrayList<>();
+            List<Map<String, Object>> allSitesInfo = new ArrayList<>();
             List<Site> sites = user.get().getSites();
-            sites.forEach(site ->
-                    siteInfo.add(user.get().getName())
-            );
-            return new UserSelectResponse(user.get(), siteInfo, UserEnum.SUCCESS);
+            if (!sites.isEmpty()) {
+                sites.forEach(site -> {
+                    Map<String, Object> userSitesVo = new HashMap<>();
+                    userSitesVo.put("sid", site.getSid());
+                    userSitesVo.put("name", site.getName());
+                    siteInfo.add(userSitesVo);
+                });
+            }
+            if (allSites != null) {
+                allSites.forEach(site -> {
+                    Map<String, Object> allSitesVO = new HashMap<>();
+                    allSitesVO.put("sid", site.getSid());
+                    allSitesVO.put("name", site.getName());
+                    allSitesInfo.add(allSitesVO);
+                });
+            }
+            return new UserSelectResponse(user.get(), siteInfo, allSitesInfo, UserEnum.SUCCESS);
         }
         return new UserSelectResponse(UserEnum.USER_NOT_EXISTS);
     }
@@ -94,7 +106,17 @@ public class UserServiceImpl implements UserService {
             user.setStaffId(userUpdateRequest.getStaffId());
             user.setName(userUpdateRequest.getName());
             user.setModifyTime(new Date());
-            user.setSites(userUpdateRequest.getSites());
+            List<Site> sites = null;
+            if (userUpdateRequest.getSitesId() != null) {
+                try {
+                    Iterable<Integer> iterable = userUpdateRequest.getSitesId();
+                    sites = siteRepository.findAllById(iterable);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return new UserUpdateResponse(UserEnum.ERROR);
+                }
+            }
+            user.setSites(sites);
             userRepository.save(user);
             return new UserUpdateResponse(user, UserEnum.MODIFY_SUCCESS);
         }

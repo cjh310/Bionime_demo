@@ -1,8 +1,6 @@
 package com.example.demo.model.request;
 
 
-import com.example.demo.model.entity.Site;
-
 import java.util.Date;
 import java.util.List;
 

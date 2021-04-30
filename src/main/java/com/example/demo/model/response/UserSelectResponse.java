@@ -5,13 +5,15 @@ import com.example.demo.Enums.UserEnum;
 import com.example.demo.model.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserSelectResponse {
     private Integer uid;
     private String staffId;
     private String name;
 
-    private List<String> siteInfo;
+    private List<Map<String, Object>> siteInfo;
+    private List<Map<String, Object>> allSitesInfo;
 
     private Integer status;
     private String message;
@@ -25,11 +27,12 @@ public class UserSelectResponse {
 
     }
 
-    public UserSelectResponse(User user, List<String> siteInfo, UserEnum userEnum) {
+    public UserSelectResponse(User user, List<Map<String, Object>> siteInfo, List<Map<String, Object>> allSitesInfo, UserEnum userEnum) {
         this.uid = user.getUid();
         this.staffId = user.getStaffId();
         this.name = user.getName();
         this.siteInfo = siteInfo;
+        this.allSitesInfo = allSitesInfo;
         this.status = userEnum.getSTATUS();
         this.message = userEnum.getZH();
     }
@@ -58,12 +61,20 @@ public class UserSelectResponse {
         this.name = name;
     }
 
-    public List<String> getSiteInfo() {
+    public List<Map<String, Object>> getSiteInfo() {
         return siteInfo;
     }
 
-    public void setSiteInfo(List<String> siteInfo) {
+    public void setSiteInfo(List<Map<String, Object>> siteInfo) {
         this.siteInfo = siteInfo;
+    }
+
+    public List<Map<String, Object>> getAllSitesInfo() {
+        return allSitesInfo;
+    }
+
+    public void setAllSitesInfo(List<Map<String, Object>> allSitesInfo) {
+        this.allSitesInfo = allSitesInfo;
     }
 
     public Integer getStatus() {
@@ -86,9 +97,10 @@ public class UserSelectResponse {
     public String toString() {
         return "UserSelectResponse{" +
                 "uid=" + uid +
-                ", staffId=" + staffId +
+                ", staffId='" + staffId + '\'' +
                 ", name='" + name + '\'' +
                 ", siteInfo=" + siteInfo +
+                ", allSitesInfo=" + allSitesInfo +
                 ", status=" + status +
                 ", message='" + message + '\'' +
                 '}';

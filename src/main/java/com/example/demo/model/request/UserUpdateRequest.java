@@ -1,8 +1,6 @@
 package com.example.demo.model.request;
 
 
-import com.example.demo.model.entity.Site;
-
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +9,7 @@ public class UserUpdateRequest {
     private String staffId;
     private String name;
     private Date modifyTime;
-    List<Site> sites;
+    List<Integer> sitesId;
 
     public Integer getUid() {
         return uid;
@@ -45,11 +43,22 @@ public class UserUpdateRequest {
         this.modifyTime = modifyTime;
     }
 
-    public List<Site> getSites() {
-        return sites;
+    public List<Integer> getSitesId() {
+        return sitesId;
     }
 
-    public void setSites(List<Site> sites) {
-        this.sites = sites;
+    public void setSitesId(List<Integer> sitesId) {
+        this.sitesId = sitesId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserUpdateRequest{" +
+                "uid=" + uid +
+                ", staffId='" + staffId + '\'' +
+                ", name='" + name + '\'' +
+                ", modifyTime=" + modifyTime +
+                ", sitesId=" + sitesId +
+                '}';
     }
 }

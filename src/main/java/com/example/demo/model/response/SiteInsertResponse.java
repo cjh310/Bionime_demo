@@ -11,10 +11,12 @@ public class SiteInsertResponse {
 
     public SiteInsertResponse() {
     }
+
     public SiteInsertResponse(SiteEnum siteEnum) {
         this.status = siteEnum.getSTATUS();
         this.message = siteEnum.getZH();
     }
+
     public SiteInsertResponse(Site site, SiteEnum siteEnum) {
         this.name = site.getName();
         this.status = siteEnum.getSTATUS();

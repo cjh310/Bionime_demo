@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -26,6 +25,12 @@ public class SiteController {
 
     @GetMapping("/addSite")
     public String addSite(Model model, SiteInsertRequest siteInsertRequest) {
+        if(siteInsertRequest.getName()==null||siteInsertRequest.getName().isEmpty()){
+            this.selectAllSites(model);
+            model.addAttribute("status", SiteEnum.NOT_NULL.getSTATUS());
+            model.addAttribute("message", "站點名稱"+SiteEnum.NOT_NULL.getZH());
+            return "index";
+        }
         SiteInsertResponse response = siteService.addSite(siteInsertRequest);
         if (response.getStatus() != 0) {
             model.addAttribute("status", response.getStatus());
@@ -77,6 +82,12 @@ public class SiteController {
 
     @GetMapping("/updateSite")
     public String updateSite(Model model, SiteUpdateRequest siteUpdateRequest) {
+        if(siteUpdateRequest.getName()==null||siteUpdateRequest.getName().isEmpty()){
+            this.selectAllSites(model);
+            model.addAttribute("status", SiteEnum.NOT_NULL.getSTATUS());
+            model.addAttribute("message", "站點名稱"+SiteEnum.NOT_NULL.getZH());
+            return "site";
+        }
         SiteUpdateResponse response = siteService.updateSite(siteUpdateRequest);
         if (response.getStatus() != 0) {
             model.addAttribute("site", siteUpdateRequest);

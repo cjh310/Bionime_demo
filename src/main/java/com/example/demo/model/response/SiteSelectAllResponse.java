@@ -1,7 +1,6 @@
 package com.example.demo.model.response;
 
 
-import com.example.demo.Enums.SiteEnum;
 import com.example.demo.model.entity.Site;
 
 import java.util.Date;

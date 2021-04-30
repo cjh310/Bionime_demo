@@ -26,7 +26,7 @@ public class User implements Serializable {
     }
 
 
-    public User(UserInsertRequest userInsertRequest,List<Site> sites) {
+    public User(UserInsertRequest userInsertRequest, List<Site> sites) {
         this.setStaffId(userInsertRequest.getStaffId());
         this.setName(userInsertRequest.getName());
         this.setModifyTime(new Date());
